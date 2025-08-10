@@ -1,0 +1,81 @@
+<script type="text/javascript">
+    RED.nodes.registerType('hx711',{
+        category: 'Raspberry Pi',
+        color: '#a6bbcf',
+        defaults: {
+            	name: {value:""},
+		hx_data: {value:"", "required": "true"},
+		hx_sck: {value:"", "required": "true"},
+		hx_scale: {value:"", "required": "true"},
+		hx_gain: {value:"128", "required": "true"},
+		hx_offset: {value:"0", "required": "true"},
+		hx_avrg: {value:"5", "required": "true"}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "font-awesome/fa-balance-scale",
+        label: function() {
+            return this.name||"hx711";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="hx711">
+    	<div class="form-row">
+       		<label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        	<input type="text" id="node-input-name" placeholder="Name">
+    	</div>
+	<div class="form-row">
+		<label for="node-input-hx_data"><i class="icon-tag"></i> DATA (GPIO-Pin)</label>
+		<input type="text" id="node-input-hx_data">
+	</div>
+	<div class="form-row">
+		<label for="node-input-hx_sck"><i class="icon-tag"></i> SCK (GPIO-Pin)</label>
+		<input type="text" id="node-input-hx_sck">
+	</div>
+	<div class="form-row">
+		<label for="node-input-hx_scale"><i class="icon-tag"></i> Scale</label>
+		<input type="text" id="node-input-hx_scale">
+	</div>
+	<div class="form-row">
+		<label for="node-input-hx_gain"><i class="icon-tag"></i> Gain</label>
+		<input type="text" id="node-input-hx_gain">
+	</div>
+	<div class="form-row">
+		<label for="node-input-hx_offset"><i class="icon-tag"></i> Offset</label>
+		<input type="text" id="node-input-hx_offset">
+	</div>	
+	<div class="form-row">
+		<label for="node-input-hx_avrg"><i class="icon-tag"></i> Average</label>
+		<input type="text" id="node-input-hx_avrg">
+	</div>
+</script>
+
+<script type="text/html" data-help-name="hx711">
+    <p>Simple node to get the weight value from a hx711, attached to the Raspberry Pis GPIOs.</p>
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+		<dt>payload
+            <span class="property-type">any</span>
+        </dt>
+        <dd>Any input value will trigger a new measure</dd>
+        <dt>tare
+            <span class="property-type">any</span>
+        </dt>
+        <dd>Input any value will tare the scale to zero</dd>
+    </dl>
+    <h3>Outputs</h3>
+    <dl class="message-properties">
+        <dt>payload
+            <span class="property-type">number</span>
+        </dt>
+        <dd>Weight in gramms</dd>
+    </dl>
+    <h3>Details</h3>
+    <p>In the config for <code>DATA</code> and <code>SCK</code>, you have to set the hardware pin numbers NOT the GPIO number!</p>
+	<p>With <code>SCALE</code> you set the calibration factor.| SCALE = (Value(Reference_load) - Value(No_load)) / Reference_load</p>
+	<p>With <code>OFFSET</code> you can set an offset to the output value</p>
+	<p>With <code>AVERAGE</code> you can get the mean value of the output by the number you typed in. (The higher the number is, the higher the CPU load gets!)</p>
+
+    <p><strong>Note:</strong> This updated version is compatible with Node-RED 4.x and Node.js 18+ (with fallback support for @ataberkylmz/hx711 and @shroudedcode/hx711).</p>
+</script>
